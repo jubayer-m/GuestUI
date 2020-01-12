@@ -2,6 +2,12 @@
 PFont myFont;
 PFont myFont2;
 
+color colBg = color(0,0,25); //dark-blue
+color colGr = color(130,255,100); //green
+color colYl = color(255,240,100); //yellow
+color colRd = color(255,100,100); //red
+
+
 void setup(){
   size(960, 540);
   //String[] fontList = PFont.list();
@@ -26,13 +32,18 @@ void setup(){
   
   dateDisp.domUpd();
   datePosUpd();
-  dispRooms = new Rooms(dateDisp.m,dateDisp.y);
+  dispRooms = new Rooms(dateDisp.m,dateDisp.y,dateDisp.dom);
 
 
   cellWidth = width/15;
   cellGap = cellWidth/10;
   topMargin = int(cellWidth*1.5);
   leftMargin = (width-(cellWidth*7+cellGap*6))/2;
+  
+  roomTypes = new RoomType[2];
+
+  roomTypes[0] = new RoomType("standard",12);
+  roomTypes[1] = new RoomType("luxury",4);
 
 }
 
@@ -94,7 +105,7 @@ void mouseClicked() {
       }
       
       dateDisp.domUpd();
-      dispRooms.reloadData(dateDisp.m,dateDisp.y);  
+      dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);  
       datePosUpd();
       
     }
@@ -110,7 +121,7 @@ void mouseClicked() {
       }
       
       dateDisp.domUpd();
-      dispRooms.reloadData(dateDisp.m,dateDisp.y);
+      dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);
       datePosUpd();
       
     }

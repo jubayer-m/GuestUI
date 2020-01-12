@@ -1,61 +1,99 @@
 Rooms dispRooms;
+RoomType[] roomTypes;
+
+
+
+class RoomType{
+
+  String name;
+  int maxNum; 
+  
+  RoomType(String nm, int n){
+    
+    name = nm;
+    maxNum = n;
+  
+  }
+
+}
+
 
 class Rooms{
 
   Table monthRooms;
   
-  Rooms(int m, int y){
+  Rooms(int m, int y, int dom){
     
     monthRooms = new Table();
-    loadData(m,y);    
+    loadData(m,y,dom);    
   
   }
   
-  void reloadData(int m, int y){
+  void reloadData(int m, int y, int dom){
     
     this.monthRooms.clearRows();
-    loadData(m,y);
+    loadData(m,y,dom);
   
   }
   
-  void loadData(int m, int y) {
+  void roomCount(int d, int [] num){
+    
+    TableRow row = this.monthRooms.getRow(d-1);
+    for(int i=0;i<roomTypes.length;i++){
+      num[i] = row.getInt(roomTypes[i].name);    
+    }
+    
+  }
+  
+  void colorLevel(int d, color [] col){
+  
+    TableRow row = this.monthRooms.getRow(d-1);
+    
+    for(int i=0;i<roomTypes.length;i++){
+    
+      int num = row.getInt(roomTypes[i].name);
+      if(num>roomTypes[i].maxNum/4) col[i] = colGr;
+      else if(num==roomTypes[i].maxNum/4) col[i] = colRd;
+      else col[i] = colYl;
+    
+    }  
+  
+  }
+  
+  void loadData(int m, int y, int dom) {
 
-    File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+m+"_"+y+".csv");
+    File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
     boolean exist = f.isFile();
   
     if(exist){
-      monthRooms = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+m+"_"+y+".csv");
+      
+      monthRooms = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv","header");
     
-    
-      for (int i = 0; i<monthRooms.getRowCount(); i++) {
-        // Iterate over all the rows in a table.
-        TableRow row = monthRooms.getRow(i);
-        
-        // Access the fields via their column name (or index).
-        int d = row.getInt("date");
-        int snum = row.getInt("standard");
-        int lnum = row.getInt("luxury");
-        // Make a Bubble object out of the data from each row.
-        println(d+""+snum+""+lnum);
-      }
     }
     else {
+      
+      monthRooms = new Table();
+      
+      monthRooms.addColumn("date");
+      for(int i=0;i<roomTypes.length;i++){
+        monthRooms.addColumn(roomTypes[i].name);
+      }
+      //monthRooms.addColumn("standard");
+      //monthRooms.addColumn("luxury");
+      
+      for(int i=1; i<=dom; i++)    {
+        TableRow row = monthRooms.addRow();
+        
+        row.setInt("date", i);
+        
+        for(int j=0;j<roomTypes.length;j++){
+          row.setInt(roomTypes[j].name, roomTypes[j].maxNum);
+        }
+        //row.setInt("standard", 12);
+        //row.setInt("luxury", 4);
+      }
     
-    monthRooms = new Table();
-    
-    monthRooms.addColumn("date");
-    monthRooms.addColumn("standard");
-    monthRooms.addColumn("luxury");
-    
-    for(int i=1; i<=monthLen[m]; i++)    {
-    TableRow row = monthRooms.addRow();
-    
-    row.setInt("date", i);
-    row.setInt("standard", 12);
-    row.setInt("luxury", 4);
-    }
-    
-    saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+m+"_"+y+".csv");
+      saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
   
     }
   }  

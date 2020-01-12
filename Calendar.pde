@@ -1,6 +1,6 @@
 class Date{
 
-  int d,m,y,w;
+  int d,m,y,w,dom;
   
   Date(int td, int tm, int ty){
   
@@ -26,6 +26,16 @@ class Date{
       ty--;
     }
     this.w = (this.d + int((tm+1)*2.6) +  ty + int(ty/4) + 6*int(ty/100) + int(ty/400) + 6) % 7;
+  }
+  
+  void domUpd(){
+    
+    dateDisp.dow();
+    
+    if (dateDisp.y%4 == 0 && dateDisp.m == 2) this.dom = 29;
+    else this.dom = monthLen[dateDisp.m];
+
+  
   }
   
 }
@@ -91,7 +101,11 @@ void calendar() {
       textSize(topMargin/6);
       if(datePos[i][j]>0) {
         text(datePos[i][j],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth/2);
-        
+        int [] avalRoom = {0,0};
+        dispRooms.roomCount(datePos[i][j],avalRoom);
+        //for(k=0;k<2;k++){}
+        text(avalRoom[0]+","+avalRoom[1],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth*0.8);
+
       }
   
     }
@@ -121,19 +135,13 @@ void calendar() {
 
 void datePosUpd(){
 
-  dateDisp.dow();
-  
-  int dom = 0;
-  if (dateDisp.y%4 == 0 && dateDisp.m == 2) dom = 29;
-  else dom = monthLen[dateDisp.m];
-  
   //int x = dateDisp.w;
   //int y = 0;
   int n = 0;
   for(int i=0;i<6;i++){
     for(int j=0;j<7;j++){
       if(i>0||j>=dateDisp.w)n++;
-      if(n<=dom) datePos[j][i] = n;
+      if(n<=dateDisp.dom) datePos[j][i] = n;
       else datePos[j][i] = 0;
     } 
   }
