@@ -1,3 +1,5 @@
+boolean thisMonth;
+
 class Date{
 
   int d,m,y,w,dom;
@@ -55,14 +57,15 @@ int [] monthLen = {29,31,28,31,30,31,30,31,31,30,31,30,31};
 
 int [][] datePos = new int [7][6];
 
-int cellWidth = 0;
-int cellGap = 0;
-int topMargin = 0;
-int leftMargin = 0;
+float cellWidth = 0;
+float cellGap = 0;
+float topMargin = 0;
+float leftMargin = 0;
 int mouseDate = 0;
 
 Date today;
 Date dateDisp;
+Date reserveDate;
 
 void calendar() {
   
@@ -85,26 +88,46 @@ void calendar() {
     for(int j=0; j<6; j++){
       
       //today
-      if(dateDisp.y == today.y && dateDisp.m == today.m && today.w == i && floor((today.d-1+(7-today.w))/7) == j) fill(200,255,255);
+      if(thisMonth && today.d == datePos[i][j]) fill(colSl);
       else fill(255);
-      if(datePos[i][j]>0 && mouseX>leftMargin+i*(cellWidth+cellGap) && mouseX<leftMargin+i*(cellWidth+cellGap)+cellWidth && mouseY > topMargin+2*cellGap+j*(cellWidth+cellGap) && mouseY < topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth){
+      if(!(thisMonth && datePos[i][j]<=today.d) && datePos[i][j]>0 && mouseX>leftMargin+i*(cellWidth+cellGap) && mouseX<leftMargin+i*(cellWidth+cellGap)+cellWidth && mouseY > topMargin+2*cellGap+j*(cellWidth+cellGap) && mouseY < topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth){
         mouseDate = datePos[i][j]; 
-        stroke(255,255,255);
+        //stroke(255);
+        //stroke(colSl);
         strokeWeight(cellGap/2);
       }
+      //else stroke(255);
+      stroke(255);
       //dayCell
       rect(leftMargin+i*(cellWidth+cellGap),topMargin+2*cellGap+j*(cellWidth+cellGap),cellWidth,cellWidth,cellGap);
-      stroke(0,0,25);
+      stroke(colBg);
       strokeWeight(0);
     
       fill(25);
       textSize(topMargin/6);
       if(datePos[i][j]>0) {
+        
+        //date
         text(datePos[i][j],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth/2);
-        int [] avalRoom = {0,0};
-        dispRooms.roomCount(datePos[i][j],avalRoom);
-        //for(k=0;k<2;k++){}
-        text(avalRoom[0]+","+avalRoom[1],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth*0.8);
+        
+        //availability level color code
+        
+        if(thisMonth && datePos[i][j]<=today.d) continue;
+        color [] colLev = new color[roomTypes.length];
+        dispRooms.colorLevel(datePos[i][j],colLev);
+        for(int k=0;k<roomTypes.length;k++){
+          fill(colLev[k]);
+          stroke(colLev[k]);
+          float factor =1;
+          rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*k/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2*cellGap,cellWidth/roomTypes.length,cellGap*2,cellGap);
+          if(k==0) factor=0.5;
+          rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*k/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2.5*cellGap,cellWidth*0.75/roomTypes.length,cellGap*2.5*factor);
+          if(k==roomTypes.length-1) factor =0.5;
+          else factor = 1;
+          rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*(k+0.5)/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2.5*cellGap,cellWidth*0.5/roomTypes.length,cellGap*2.5*factor);
+          stroke(colBg);
+        }
+        //text(avalRoom[0]+","+avalRoom[1],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth*0.8);
 
       }
   
@@ -117,15 +140,16 @@ void calendar() {
   
   fill(25);
   
-  //arrows
-  triangle(leftMargin+cellWidth,topMargin/3+cellGap,leftMargin+cellWidth,topMargin/3+topMargin*2/3*0.8-cellGap,leftMargin+cellWidth/2,topMargin*1.8/3);
-  triangle(width-(leftMargin+cellWidth),topMargin/3+cellGap,width-(leftMargin+cellWidth),topMargin/3+topMargin*2/3*0.8-cellGap,width-(leftMargin+cellWidth/2),topMargin*1.8/3);
-  
   //display month,year
   textSize(topMargin/3);
   text(monthName[dateDisp.m-1],width/2,topMargin*1.8/3);
   textSize(topMargin/6);
   text(dateDisp.y,width/2,topMargin*1.2/3);
+
+  //arrows
+  triangle(width-(leftMargin+cellWidth),topMargin/3+cellGap,width-(leftMargin+cellWidth),topMargin/3+topMargin*2/3*0.8-cellGap,width-(leftMargin+cellWidth/2),topMargin*1.8/3);
+  if(thisMonth) fill(250);
+  triangle(leftMargin+cellWidth,topMargin/3+cellGap,leftMargin+cellWidth,topMargin/3+topMargin*2/3*0.8-cellGap,leftMargin+cellWidth/2,topMargin*1.8/3);
 
 }
 
