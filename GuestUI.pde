@@ -22,7 +22,6 @@ void setup(){
   //myFont = createFont("Vladimir Script",24);
   myFont2 = createFont("Lucida Sans Regular",24);
   
-  size(960, 540);
   today = new Date(0,0,0);
   today.todayDate();
   today.dow();
@@ -31,10 +30,14 @@ void setup(){
   dateDisp.todayDate();
   dateDisp.d = 1;
   
+  thisMonth = true;
+  
   roomTypes = new RoomType[2];
+  //roomTypes = new RoomType[3];
 
   roomTypes[0] = new RoomType("standard",12);
   roomTypes[1] = new RoomType("luxury",4);
+  //roomTypes[2] = new RoomType("exclusive",4);
 
   
   dateDisp.domUpd();
@@ -98,7 +101,7 @@ void mouseClicked() {
   
   case 1:
       //change month for left arrow
-    if(mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
+    if(thisMonth==false && mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
       
       dateDisp.m -=1;
       
@@ -107,6 +110,9 @@ void mouseClicked() {
         dateDisp.y -=1;
       }
       
+      if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
+      else thisMonth = false;
+
       dateDisp.domUpd();
       dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);  
       datePosUpd();
@@ -122,6 +128,9 @@ void mouseClicked() {
         dateDisp.m = 1;
         dateDisp.y +=1;
       }
+      
+      if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
+      else thisMonth = false;
       
       dateDisp.domUpd();
       dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);
