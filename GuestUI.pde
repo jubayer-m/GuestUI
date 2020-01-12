@@ -26,9 +26,11 @@ void setup(){
   today.todayDate();
   today.dow();
   
-  dateDisp = new Date(0,0,0);
-  dateDisp.todayDate();
+  dateDisp = new Date(today.d,today.m,today.y);
+  //dateDisp.todayDate();
   dateDisp.d = 1;
+  
+  reserveDate = new Date(0,0,0);
   
   thisMonth = true;
   
@@ -68,6 +70,9 @@ void draw() {
     break;
   case 1: 
     calendar();  // Prints "One"
+    break;
+  case 2:
+    reserveScreen();
     break;
   }
   
@@ -138,7 +143,17 @@ void mouseClicked() {
       
     }
     
-    if(mouseDate>0) println(mouseDate);
+    if(mouseDate>0) {
+      
+      reserveDate.d = mouseDate;
+      reserveDate.m = dateDisp.m;
+      reserveDate.y = dateDisp.y;
+      
+      transition[0] = 1;
+      transition[1] = 2;
+
+      
+    }
     
     break;
 
