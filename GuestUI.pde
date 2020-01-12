@@ -31,6 +31,12 @@ void setup(){
   dateDisp.todayDate();
   dateDisp.d = 1;
   
+  roomTypes = new RoomType[2];
+
+  roomTypes[0] = new RoomType("standard",12);
+  roomTypes[1] = new RoomType("luxury",4);
+
+  
   dateDisp.domUpd();
   datePosUpd();
   dispRooms = new Rooms(dateDisp.m,dateDisp.y,dateDisp.dom);
@@ -41,10 +47,6 @@ void setup(){
   topMargin = int(cellWidth*1.5);
   leftMargin = (width-(cellWidth*7+cellGap*6))/2;
   
-  roomTypes = new RoomType[2];
-
-  roomTypes[0] = new RoomType("standard",12);
-  roomTypes[1] = new RoomType("luxury",4);
 
 }
 
