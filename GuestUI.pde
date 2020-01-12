@@ -20,12 +20,14 @@ void setup(){
   today.todayDate();
   today.dow();
   
-  dispRooms = new Rooms(today.m,today.y);
-
   dateDisp = new Date(0,0,0);
   dateDisp.todayDate();
   dateDisp.d = 1;
+  
+  dateDisp.domUpd();
   datePosUpd();
+  dispRooms = new Rooms(dateDisp.m,dateDisp.y);
+
 
   cellWidth = width/15;
   cellGap = cellWidth/10;
@@ -90,7 +92,9 @@ void mouseClicked() {
         dateDisp.m = 12;
         dateDisp.y -=1;
       }
-  
+      
+      dateDisp.domUpd();
+      dispRooms.reloadData(dateDisp.m,dateDisp.y);  
       datePosUpd();
       
     }
@@ -105,6 +109,8 @@ void mouseClicked() {
         dateDisp.y +=1;
       }
       
+      dateDisp.domUpd();
+      dispRooms.reloadData(dateDisp.m,dateDisp.y);
       datePosUpd();
       
     }
