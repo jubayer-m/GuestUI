@@ -6,6 +6,7 @@ color colBg = color(0,0,25); //dark-blue
 color colGr = color(130,255,100); //green
 color colYl = color(255,240,100); //yellow
 color colRd = color(255,100,100); //red
+color colSl = color(200,255,255); //cyan
 
 
 void setup(){
