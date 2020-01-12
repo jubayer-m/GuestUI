@@ -101,7 +101,7 @@ void mouseClicked() {
   
   case 1:
       //change month for left arrow
-    if(thisMonth==false && mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
+    if(!thisMonth && mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
       
       dateDisp.m -=1;
       
