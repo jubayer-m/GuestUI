@@ -49,6 +49,14 @@ void reserveScreen(){
     fill(255);
     text("\n\n"+roomTypes[i].name,width/2+(width*0.1+cellGap)*(i-float(roomTypes.length-1)/2),height*0.45);
   }
+  
+  rect(width/2-width*0.05+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2),height*(0.65+0.01),width*0.1,height*0.065,cellGap);
+  rect(width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2),height*(0.65+0.01),width*0.1,height*0.065,cellGap);
+  
+  fill(25);
+  text("back",width/2+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2),height*(0.65+0.075/2));
+  text("proceed",width/2+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2),height*(0.65+0.075/2));
+
   //resv.typeUpd(1);
   
   //text(resv.rm.name, width/2,height*0.8);
