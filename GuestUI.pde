@@ -21,37 +21,6 @@ void setup(){
   //myFont = createFont("Vivaldi",24);
   //myFont = createFont("Vladimir Script",24);
   myFont2 = createFont("Lucida Sans Regular",24);
-  
-  today = new Date(0,0,0);
-  today.todayDate();
-  today.dow();
-  
-  dateDisp = new Date(today.d,today.m,today.y);
-  //dateDisp.todayDate();
-  dateDisp.d = 1;
-  
-  reserveDate = new Date(0,0,0);
-  
-  thisMonth = true;
-  
-  roomTypes = new RoomType[2];
-  //roomTypes = new RoomType[3];
-
-  roomTypes[0] = new RoomType("standard",12);
-  roomTypes[1] = new RoomType("luxury",4);
-  //roomTypes[2] = new RoomType("exclusive",4);
-
-  
-  dateDisp.domUpd();
-  datePosUpd();
-  dispRooms = new Rooms(dateDisp.m,dateDisp.y,dateDisp.dom);
-
-
-  cellWidth = width/15;
-  cellGap = cellWidth/10;
-  topMargin = int(cellWidth*1.5);
-  leftMargin = (width-(cellWidth*7+cellGap*6))/2;
-  
 
 }
 
@@ -93,72 +62,98 @@ void draw() {
 }
 
 void mouseClicked() {
-
-  switch(dispState){
-  case 0:
-    if(mousePos == 1) {
+  if(transition[0]==0){
+    switch(dispState){
+    case 0:
+      if(mousePos == 1) {
+        
+        today = new Date(0,0,0);
+        today.todayDate();
+        today.dow();
+        
+        dateDisp = new Date(today.d,today.m,today.y);
+        //dateDisp.todayDate();
+        dateDisp.d = 1;
+        
+        thisMonth = true;
+        
+        roomTypes = new RoomType[2];
+        //roomTypes = new RoomType[3];
+      
+        roomTypes[0] = new RoomType("standard",12);
+        roomTypes[1] = new RoomType("luxury",4);
+        //roomTypes[2] = new RoomType("exclusive",4);
+               
+        dateDisp.domUpd();
+        datePosUpd();
+        dispRooms = new Rooms(dateDisp.m,dateDisp.y,dateDisp.dom);
+          
+        cellWidth = width/15;
+        cellGap = cellWidth/10;
+        topMargin = int(cellWidth*1.5);
+        leftMargin = (width-(cellWidth*7+cellGap*6))/2;
+      
+        transition[0] = 1;
+        transition[1] = 1; 
+      }
+      break;
     
-      transition[0] = 1;
-      transition[1] = 1;
+    case 1:
+        //change month for left arrow
+      if(!thisMonth && mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
+        
+        dateDisp.m -=1;
+        
+        if (dateDisp.m == 0){ 
+          dateDisp.m = 12;
+          dateDisp.y -=1;
+        }
+        
+        if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
+        else thisMonth = false;
   
-    }
-    break;
-  
-  case 1:
-      //change month for left arrow
-    if(!thisMonth && mouseX>leftMargin+cellWidth/2 && mouseX<leftMargin+cellWidth && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
-      
-      dateDisp.m -=1;
-      
-      if (dateDisp.m == 0){ 
-        dateDisp.m = 12;
-        dateDisp.y -=1;
+        dateDisp.domUpd();
+        dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);  
+        datePosUpd();
+        
       }
       
-      if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
-      else thisMonth = false;
-
-      dateDisp.domUpd();
-      dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);  
-      datePosUpd();
-      
-    }
-    
-    //change month for right arrow  
-    if(mouseX<width-(leftMargin+cellWidth/2) && mouseX>width-(leftMargin+cellWidth) && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
-      
-      dateDisp.m +=1;
-      
-      if (dateDisp.m == 13){ 
-        dateDisp.m = 1;
-        dateDisp.y +=1;
+      //change month for right arrow  
+      if(mouseX<width-(leftMargin+cellWidth/2) && mouseX>width-(leftMargin+cellWidth) && mouseY>(topMargin/3+cellGap) && mouseY<topMargin/3+topMargin*2/3*0.8-cellGap) {
+        
+        dateDisp.m +=1;
+        
+        if (dateDisp.m == 13){ 
+          dateDisp.m = 1;
+          dateDisp.y +=1;
+        }
+        
+        if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
+        else thisMonth = false;
+        
+        dateDisp.domUpd();
+        dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);
+        datePosUpd();
+        
       }
       
-      if(dateDisp.y == today.y && today.m == dateDisp.m) thisMonth = true;
-      else thisMonth = false;
+      if(mouseDate>0) {
+        
+        reserveDate = new Date(0,0,0);
+        
+        reserveDate.d = mouseDate;
+        reserveDate.m = dateDisp.m;
+        reserveDate.y = dateDisp.y;
+        
+        transition[0] = 1;
+        transition[1] = 2;
+        
+      }
       
-      dateDisp.domUpd();
-      dispRooms.reloadData(dateDisp.m,dateDisp.y,dateDisp.dom);
-      datePosUpd();
-      
-    }
-    
-    if(mouseDate>0) {
-      
-      reserveDate.d = mouseDate;
-      reserveDate.m = dateDisp.m;
-      reserveDate.y = dateDisp.y;
-      
-      transition[0] = 1;
-      transition[1] = 2;
-
-      
-    }
-    
-    break;
-
-  }
+      break;
   
+    }
+  }  
 
 }
 
