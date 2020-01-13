@@ -53,7 +53,7 @@ class Rooms{
     
       int num = row.getInt(roomTypes[i].name);
       if(num>roomTypes[i].maxNum/4) col[i] = colGr;
-      else if(num==int(roomTypes[i].maxNum/4)) col[i] = colRd;
+      else if(num==0) col[i] = colRd;
       else col[i] = colYl;
     
     }  

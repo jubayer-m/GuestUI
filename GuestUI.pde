@@ -139,16 +139,42 @@ void mouseClicked() {
       
       if(mouseDate>0) {
         
-        reserveDate = new Date(0,0,0);
+        int [] n = new int[roomTypes.length];
         
-        reserveDate.d = mouseDate;
-        reserveDate.m = dateDisp.m;
-        reserveDate.y = dateDisp.y;
+        dispRooms.roomCount(mouseDate, n);
         
-        resv = new Reservation(reserveDate, 0);
+        boolean notAllZero = false;
         
-        transition[0] = 1;
-        transition[1] = 2;
+        for(int i=0; i<roomTypes.length; i++){
+        
+          if (n[i]>0) {
+            notAllZero = true;
+            break;
+          }
+        
+        }
+        
+        if(notAllZero){
+          
+          reserveDate = new Date(0,0,0);
+          
+          reserveDate.d = mouseDate;
+          reserveDate.m = dateDisp.m;
+          reserveDate.y = dateDisp.y;
+          
+          resv = new Reservation(reserveDate, 0);
+          
+          transition[0] = 1;
+          transition[1] = 2;
+          
+        }
+        
+        /*else{
+        
+          fill(colRd);
+          text("no rooms available on the selected date",width*0.8,height*0.9);
+        
+        }*/
         
       }
       
