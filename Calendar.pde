@@ -118,14 +118,14 @@ void calendar() {
         for(int k=0;k<roomTypes.length;k++){
           fill(colLev[k]);
           stroke(colLev[k]);
-          float factor =1;
-          rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*k/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2*cellGap,cellWidth/roomTypes.length,cellGap*2,cellGap);
-          if(k==0) factor=0.5;
+          //float factor =1;
+          rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*k/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2*cellGap,cellWidth/roomTypes.length,cellGap*2,0,0,cellGap*floor((k+1.001)/roomTypes.length),floor(1/(float(k)+0.99))*cellGap);
+          /*if(k==0) factor=0.5;
           rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*k/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2.5*cellGap,cellWidth*0.75/roomTypes.length,cellGap*2.5*factor);
           if(k==roomTypes.length-1) factor =0.5;
           else factor = 1;
           rect(leftMargin+i*(cellWidth+cellGap)+cellWidth*(k+0.5)/roomTypes.length,topMargin+2*cellGap+j*(cellWidth+cellGap)+cellWidth-2.5*cellGap,cellWidth*0.5/roomTypes.length,cellGap*2.5*factor);
-          stroke(colBg);
+          stroke(colBg);*/
         }
         //text(avalRoom[0]+","+avalRoom[1],leftMargin+i*(cellWidth+cellGap)+cellWidth/2,topMargin+j*(cellWidth+cellGap)+cellWidth*0.8);
 

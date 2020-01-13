@@ -145,6 +145,8 @@ void mouseClicked() {
         reserveDate.m = dateDisp.m;
         reserveDate.y = dateDisp.y;
         
+        resv = new Reservation(reserveDate, 0);
+        
         transition[0] = 1;
         transition[1] = 2;
         
