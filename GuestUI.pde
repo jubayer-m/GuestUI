@@ -162,7 +162,11 @@ void mouseClicked() {
           reserveDate.m = dateDisp.m;
           reserveDate.y = dateDisp.y;
           
-          resv = new Reservation(reserveDate, 0);
+          int tp=0;
+          
+          while(n[tp]==0) tp++;
+          
+          resv = new Reservation(reserveDate, tp);
           
           transition[0] = 1;
           transition[1] = 2;
