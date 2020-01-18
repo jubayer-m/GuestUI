@@ -83,8 +83,8 @@ void mouseClicked() {
         roomTypes = new RoomType[2];
         //roomTypes = new RoomType[3];
       
-        roomTypes[0] = new RoomType("standard",12);
-        roomTypes[1] = new RoomType("luxury",4);
+        roomTypes[0] = new RoomType("standard",12,5000);
+        roomTypes[1] = new RoomType("luxury",4,10000);
         //roomTypes[2] = new RoomType("exclusive",4);
                
         dateDisp.domUpd();
@@ -204,7 +204,7 @@ void mouseClicked() {
         }
       }
       
-      if(mouseY>height*(0.45+0.05/2) && mouseY<height*(0.45+0.05/2)+height*0.075){
+      if(mouseY>height*(0.45+0.05/2) && mouseY<height*(0.45+0.05/2)+height*0.1){
         
         int [] n = new int[roomTypes.length];
         

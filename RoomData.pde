@@ -6,12 +6,14 @@ RoomType[] roomTypes;
 class RoomType{
 
   String name;
-  int maxNum; 
+  int maxNum;
+  int basePrice;
   
-  RoomType(String nm, int n){
+  RoomType(String nm, int n, int p){
     
     name = nm;
     maxNum = n;
+    basePrice = p;
   
   }
 
