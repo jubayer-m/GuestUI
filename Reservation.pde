@@ -82,7 +82,7 @@ class Reservation{
     
     row.setInt("type",this.typeNum);
     row.setInt("price",price);
-
+    row.setString("name",txt);
         
     saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");
   
@@ -117,6 +117,7 @@ class Reservation{
     
     row.setInt("type",this.typeNum);
     row.setInt("price",price);
+    row.setString("name",txt);
    
     saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
 
@@ -148,13 +149,14 @@ void reserveScreen(){
     text("\n\n¥"+int(roomTypes[i].basePrice*resv.priceFactor),width/2+(width*0.1+cellGap)*(i-float(roomTypes.length-1)/2),height*0.5);
 
   }
-  
-  rect(width/2-width*0.05+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2),height*(0.65+0.01),width*0.1,height*0.065,cellGap);
-  rect(width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2),height*(0.65+0.01),width*0.1,height*0.065,cellGap);
-  
+  text("Name:", width/2,height*0.625);
+  rect(width/2-width*0.05+(width*0.1+cellGap)*(-1.0/2),height*(0.65+0.01+0.1),width*0.1,height*0.065,cellGap);
+  rect(width/2-width*0.05+(width*0.1+cellGap)*(1-1.0/2),height*(0.65+0.01+0.1),width*0.1,height*0.065,cellGap);
+  rect(width/2-width*0.05+(width*0.1+cellGap)*(-1.0/2),height*(0.65+0.01),(width*0.05+(width*0.1+cellGap)*(1-1.0/2))*2,height*0.065,cellGap);
   fill(25);
-  text("back",width/2+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2),height*(0.65+0.075/2));
-  text("confirm",width/2+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2),height*(0.65+0.075/2));
+  text(txt,width/2,height*(0.65+0.075/2));
+  text("back",width/2+(width*0.1+cellGap)*(-1.0/2),height*(0.65+0.075/2+0.1));
+  text("confirm",width/2+(width*0.1+cellGap)*(1-1.0/2),height*(0.65+0.075/2+0.1));
 
   //resv.typeUpd(1);
   

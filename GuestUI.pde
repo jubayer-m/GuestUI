@@ -8,6 +8,8 @@ color colYl = color(255,240,100); //yellow
 color colRd = color(255,100,100); //red
 color colSl = color(200,255,255); //cyan
 
+String txt = "";
+
 
 void setup(){
   size(960, 540);
@@ -85,7 +87,7 @@ void mouseClicked() {
       
         roomTypes[0] = new RoomType("standard",12,5000);
         roomTypes[1] = new RoomType("luxury",4,10000);
-        //roomTypes[2] = new RoomType("exclusive",4);
+        //roomTypes[2] = new RoomType("exclusive",4, 20000);
                
         dateDisp.domUpd();
         datePosUpd();
@@ -189,7 +191,7 @@ void mouseClicked() {
     
     case 2:
       
-      if(mouseY> height*(0.65+0.01) && mouseY< height*(0.65+0.01)+height*0.065){
+      if(mouseY> height*(0.65+0.01+0.1) && mouseY< height*(0.65+0.01+0.1)+height*0.065){
         if(mouseX> width/2-width*0.05+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2) && mouseX< width/2-width*0.05+(width*0.1+cellGap)*(-float(roomTypes.length-1)/2)+width*0.1){ 
           transition[0] = 1;
           transition[1] = 1;          
@@ -225,6 +227,23 @@ void mouseClicked() {
   
     }
   }  
+
+}
+
+void keyTyped(){
+  
+  if(dispState==2){
+  
+    if (key == BACKSPACE){
+      
+      if(txt.length()>0) txt = txt.substring(0,txt.length()-1);
+  
+  
+    }
+    
+    else txt = txt + key;
+  
+  }
 
 }
 
