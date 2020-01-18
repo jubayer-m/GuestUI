@@ -65,20 +65,41 @@ class Reservation{
     row.setInt("serial number",this.number[1]);
     row.setInt("trail number",this.number[2]);
     
-    row.setString("type",this.rm.name);
+    row.setInt("type",this.typeNum);
         
     saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");
   
-    /*
-    f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\reservations\\daily\\"+this.date.d+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
+    
+    f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
     exist = f.isFile();
   
     if(exist){
       
-      table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+monthName[m-1]+"_"+y+".csv","header");
+      table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv","header");
     
     }
-    else{}*/
+    else{
+    
+      table = new Table();
+      
+      table.addColumn("lead number");
+      table.addColumn("serial number");
+      table.addColumn("trail number");
+      table.addColumn("type");
+      table.addColumn("name");
+   
+    }
+    
+    row = table.addRow();
+    
+    row.setInt("lead number", this.number[0]);
+    row.setInt("serial number",this.number[1]);
+    row.setInt("trail number",this.number[2]);
+    
+    row.setInt("type",this.typeNum);
+    
+    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
+
   }
   
 }
