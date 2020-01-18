@@ -27,25 +27,33 @@ class Reservation{
   
   void reserve(){
     
-    /*int n=0;
+    int n=0;
     boolean exist=true;
     
+    File f;
+    
     while (exist){
+      n++;
+      f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");    
+      exist = f.isFile();
+    }
     
-      File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv");    
-    
-    
-    }*/
+    n--;
     
     this.number = new int[3];
   
     Table table;
     
-    table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv","header");
+    table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv","header");
     
     this.number[0] = int(random(100,999));
-    this.number[1] = table.getRowCount()+1;
+    this.number[1] = n*1000+table.getRowCount()+1;
     this.number[2] = int(random(100,999));
+    
+    if(table.getRowCount()>=1000) {
+      n++;
+      table.clearRows();
+    }
     
     TableRow row = table.addRow();
     
@@ -58,9 +66,19 @@ class Reservation{
     row.setInt("trail number",this.number[2]);
     
     row.setString("type",this.rm.name);
-    
-    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv");
+        
+    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");
   
+    /*
+    f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\reservations\\daily\\"+this.date.d+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
+    exist = f.isFile();
+  
+    if(exist){
+      
+      table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+monthName[m-1]+"_"+y+".csv","header");
+    
+    }
+    else{}*/
   }
   
 }
