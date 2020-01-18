@@ -5,6 +5,16 @@ void menu(){
   textAlign(CENTER,CENTER);
   textSize(height/4);
   text("Hotel 54",width/2,height*0.35);
+  //textSize(height/8);
+  //text("Hotel",width/2,height*0.2);
+  
+  //textFont(myFont);
+  //textSize(height/3);
+  //text("54",width/2,height*0.3);  
+  
+
+  //textFont(myFont);
+  
   mousePos = 0;
   //textFont(myFont2);
   if(pow((mouseX-width/2),2)<22500 && mouseY>height*0.6 && mouseY<height*0.675){   

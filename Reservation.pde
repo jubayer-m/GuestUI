@@ -8,7 +8,7 @@ class Reservation{
   
   String name;
   
-  int number;
+  int [] number;
   
   Reservation(Date d, int n){
   
@@ -23,6 +23,44 @@ class Reservation{
     this.typeNum = n;
     this.rm = roomTypes[typeNum];   
 
+  }
+  
+  void reserve(){
+    
+    /*int n=0;
+    boolean exist=true;
+    
+    while (exist){
+    
+      File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv");    
+    
+    
+    }*/
+    
+    this.number = new int[3];
+  
+    Table table;
+    
+    table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv","header");
+    
+    this.number[0] = int(random(100,999));
+    this.number[1] = table.getRowCount()+1;
+    this.number[2] = int(random(100,999));
+    
+    TableRow row = table.addRow();
+    
+    row.setInt("year",this.date.y);
+    row.setInt("month",this.date.m);
+    row.setInt("date",this.date.d);
+    
+    row.setInt("lead number", this.number[0]);
+    row.setInt("serial number",this.number[1]);
+    row.setInt("trail number",this.number[2]);
+    
+    row.setString("type",this.rm.name);
+    
+    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all reservations.csv");
+  
   }
   
 }
@@ -70,7 +108,7 @@ void detailsScreen(){
   
   
   fill(255);
-  text(resv.number, width/2, height/2);
+  text(resv.number[0]*100000+resv.number[1]+""+resv.number[2], width/2, height/2);
 
 
 

@@ -13,13 +13,14 @@ void setup(){
   size(960, 540);
   //String[] fontList = PFont.list();
   //printArray(fontList);
-  myFont = createFont("Chiller",32);
-  //myFont = createFont("Colonna MT",32);
+  //myFont = createFont("Chiller",32);
+  myFont = createFont("Colonna MT",32);
   //myFont = createFont("Bauhaus 93",24);
   //myFont = createFont("Jokerman",24);
   //myFont = createFont("Freestyle Script",24);
   //myFont = createFont("Vivaldi",24);
   //myFont = createFont("Vladimir Script",24);
+  //myFont = createFont("Lucida Sans Regular",24);
   myFont2 = createFont("Lucida Sans Regular",24);
 
 }
@@ -195,8 +196,7 @@ void mouseClicked() {
         }
         if(mouseX> width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2) && mouseX< width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2)+width*0.1){ 
             
-          resv.number =int(random(1000000,9999999));
-          
+          resv.reserve();
           dispRooms.decrementRoom();
           
           transition[0] = 1;

@@ -62,12 +62,12 @@ class Rooms{
   
   void loadData(int m, int y, int dom) {
 
-    File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
+    File f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
     boolean exist = f.isFile();
   
     if(exist){
       
-      monthRooms = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv","header");
+      monthRooms = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\"+monthName[m-1]+"_"+y+".csv","header");
     
     }
     else {
@@ -93,7 +93,7 @@ class Rooms{
         //row.setInt("luxury", 4);
       }
     
-      saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
+      saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\"+monthName[m-1]+"_"+y+".csv");
   
     }
   }
@@ -108,7 +108,7 @@ class Rooms{
     
     this.monthRooms.setInt(resv.date.d-1,roomTypes[resv.typeNum].name,n);
     
-    saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\GuestUI\\data\\availability\\"+monthName[resv.date.m-1]+"_"+resv.date.y+".csv");
+    saveTable(monthRooms, "C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\"+monthName[resv.date.m-1]+"_"+resv.date.y+".csv");
 
     
   }
