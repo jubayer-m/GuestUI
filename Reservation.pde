@@ -8,7 +8,7 @@ class Reservation{
   float priceFactor;
   
   String name;
-  
+  int error=0;
   int [] number;
   
   Reservation(Date d, int n){
@@ -40,87 +40,92 @@ class Reservation{
   
   void reserve(){
     
-    int price = int(roomTypes[this.typeNum].basePrice*this.priceFactor);
-    
-    int n=0;
-    boolean exist=true;
-    
-    File f;
-    
-    while (exist){
-      n++;
-      f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");    
-      exist = f.isFile();
-    }
-    
-    n--;
-    
-    this.number = new int[3];
-  
-    Table table;
-    
-    table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv","header");
-    
-    this.number[0] = int(random(100,999));
-    this.number[1] = n*1000+table.getRowCount()+1;
-    this.number[2] = int(random(100,999));
-    
-    if(table.getRowCount()>=1000) {
-      n++;
-      table.clearRows();
-    }
-    
-    TableRow row = table.addRow();
-    
-    row.setInt("year",this.date.y);
-    row.setInt("month",this.date.m);
-    row.setInt("date",this.date.d);
-    
-    row.setInt("lead number", this.number[0]);
-    row.setInt("serial number",this.number[1]);
-    row.setInt("trail number",this.number[2]);
-    
-    row.setInt("type",this.typeNum);
-    row.setInt("price",price);
-    row.setString("name",txt);
-        
-    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");
-  
-    
-    f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
-    exist = f.isFile();
-  
-    if(exist){
-      
-      table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv","header");
-    
-    }
+    if(txt.length()==0) this.error = 1;
     else{
-    
-      table = new Table();
       
-      table.addColumn("lead number");
-      table.addColumn("serial number");
-      table.addColumn("trail number");
-      table.addColumn("type");
-      table.addColumn("name");
-      table.addColumn("price");
-      //table.addColumn("status");
-   
+      this.error = 0;
+      
+      int price = int(roomTypes[this.typeNum].basePrice*this.priceFactor);
+      
+      int n=0;
+      boolean exist=true;
+      
+      File f;
+      
+      while (exist){
+        n++;
+        f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");    
+        exist = f.isFile();
+      }
+      
+      n--;
+      
+      this.number = new int[3];
+    
+      Table table;
+      
+      table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv","header");
+      
+      this.number[0] = int(random(100,999));
+      this.number[1] = n*1000+table.getRowCount()+1;
+      this.number[2] = int(random(100,999));
+      
+      if(table.getRowCount()>=1000) {
+        n++;
+        table.clearRows();
+      }
+      
+      TableRow row = table.addRow();
+      
+      row.setInt("year",this.date.y);
+      row.setInt("month",this.date.m);
+      row.setInt("date",this.date.d);
+      
+      row.setInt("lead number", this.number[0]);
+      row.setInt("serial number",this.number[1]);
+      row.setInt("trail number",this.number[2]);
+      
+      row.setInt("type",this.typeNum);
+      row.setInt("price",price);
+      row.setString("name",txt);
+          
+      saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\all\\all reservations_"+n+".csv");
+    
+      
+      f = dataFile("C:\\Users\\jubay\\Desktop\\HRS\\data\\availability\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
+      exist = f.isFile();
+    
+      if(exist){
+        
+        table = loadTable("C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv","header");
+      
+      }
+      else{
+      
+        table = new Table();
+        
+        table.addColumn("lead number");
+        table.addColumn("serial number");
+        table.addColumn("trail number");
+        table.addColumn("type");
+        table.addColumn("name");
+        table.addColumn("price");
+        //table.addColumn("status");
+     
+      }
+      
+      row = table.addRow();
+      
+      row.setInt("lead number", this.number[0]);
+      row.setInt("serial number",this.number[1]);
+      row.setInt("trail number",this.number[2]);
+      
+      row.setInt("type",this.typeNum);
+      row.setInt("price",price);
+      row.setString("name",txt);
+     
+      saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
     }
-    
-    row = table.addRow();
-    
-    row.setInt("lead number", this.number[0]);
-    row.setInt("serial number",this.number[1]);
-    row.setInt("trail number",this.number[2]);
-    
-    row.setInt("type",this.typeNum);
-    row.setInt("price",price);
-    row.setString("name",txt);
-   
-    saveTable(table,"C:\\Users\\jubay\\Desktop\\HRS\\data\\reservations\\daily\\"+this.date.y+"\\"+monthName[this.date.m-1]+"\\"+this.date.d+".csv");
-
   }
   
 }
@@ -154,9 +159,20 @@ void reserveScreen(){
   rect(width/2-width*0.05+(width*0.1+cellGap)*(1-1.0/2),height*(0.65+0.01+0.1),width*0.1,height*0.065,cellGap);
   rect(width/2-width*0.05+(width*0.1+cellGap)*(-1.0/2),height*(0.65+0.01),(width*0.05+(width*0.1+cellGap)*(1-1.0/2))*2,height*0.065,cellGap);
   fill(25);
-  text(txt,width/2,height*(0.65+0.075/2));
   text("back",width/2+(width*0.1+cellGap)*(-1.0/2),height*(0.65+0.075/2+0.1));
   text("confirm",width/2+(width*0.1+cellGap)*(1-1.0/2),height*(0.65+0.075/2+0.1));
+  if(txt.length()==0)   {
+  
+    fill(225);
+    
+    if(resv.error ==1) fill(colRd);
+    
+    text("Please Enter Your Name",width/2,height*(0.65+0.075/2));
+
+  }
+
+  else text(txt,width/2,height*(0.65+0.075/2));
+
 
   //resv.typeUpd(1);
   

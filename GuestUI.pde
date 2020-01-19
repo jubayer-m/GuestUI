@@ -199,10 +199,13 @@ void mouseClicked() {
         if(mouseX> width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2) && mouseX< width/2-width*0.05+(width*0.1+cellGap)*(1-float(roomTypes.length-1)/2)+width*0.1){ 
             
           resv.reserve();
-          dispRooms.decrementRoom();
           
-          transition[0] = 1;
-          transition[1] = 3;          
+          if(resv.error==0){
+            dispRooms.decrementRoom();
+            
+            transition[0] = 1;
+            transition[1] = 3;
+          }
         }
       }
       
@@ -237,8 +240,7 @@ void keyTyped(){
     if (key == BACKSPACE){
       
       if(txt.length()>0) txt = txt.substring(0,txt.length()-1);
-  
-  
+    
     }
     
     else txt = txt + key;
